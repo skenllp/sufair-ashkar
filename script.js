@@ -22,34 +22,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const openingEl = document.getElementById('opening');
   const video = document.getElementById('opening-video');
   const skipBtn = document.getElementById('skip-btn');
+  const openInvitationBtn = document.getElementById('open-invitation-btn');
   const music = document.getElementById('bg-music');
   const musicFab = document.getElementById('music-fab');
 
   let openingDone = false;
   let musicStarted = false;
+  let videoStarted = false;
 
-  // Attempt to autoplay music immediately from the very beginning
-  function startMusic() {
-    if (musicStarted || !music) return;
-    music.currentTime = 0;
-    music.volume = 0.55;
-    music.play().then(() => {
-      musicStarted = true;
-      if (musicFab) { musicFab.classList.add('playing'); musicFab.classList.remove('needs-tap'); }
-    }).catch(() => {
-      // Autoplay blocked by browser — will retry on first user interaction
-    });
-  }
+  // Start both music and video
+  function startExperience() {
+    if (videoStarted) return;
+    videoStarted = true;
 
-  // Start music immediately when video starts playing
-  if (video) {
-    video.addEventListener('play', () => {
-      startMusic();
-    }, { once: true });
+    // Hide the open invitation button
+    if (openInvitationBtn) {
+      openInvitationBtn.classList.add('hidden');
+    }
+
+    // Show skip button
+    if (skipBtn) {
+      skipBtn.classList.add('visible');
+    }
+
+    // Start music
+    if (music && !musicStarted) {
+      music.currentTime = 0;
+      music.volume = 0.55;
+      music.play().then(() => {
+        musicStarted = true;
+        if (musicFab) { 
+          musicFab.classList.add('playing'); 
+          musicFab.classList.remove('needs-tap'); 
+        }
+      }).catch(() => {
+        console.log('Music autoplay blocked');
+      });
+    }
+
+    // Start video
+    if (video) {
+      video.play().catch(() => {
+        console.log('Video autoplay blocked');
+      });
+    }
   }
-  
-  // Try immediately on page load as well
-  startMusic();
 
   function finishOpening(){
     if (openingDone) return;
@@ -61,22 +78,34 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
         introReveal();
         if (window.ScrollTrigger) ScrollTrigger.refresh();
-        // Ensure music is playing after opening (in case autoplay was blocked)
-        startMusic();
       }
     });
   }
 
   document.body.style.overflow = 'hidden';
+  
+  // Open Invitation button click handler
+  if (openInvitationBtn) {
+    openInvitationBtn.addEventListener('click', startExperience);
+  }
+
+  // Video ended handler
   if (video) {
-    video.play().catch(()=>{});
     video.addEventListener('ended', finishOpening);
   }
-  setTimeout(finishOpening, 6000); // fallback ~6s
-  if (skipBtn) skipBtn.addEventListener('click', (e)=>{ startMusic(); finishOpening(); });
-  // Any tap on the opening screen itself is a strong, direct user gesture — use it to unlock audio
-  if (openingEl) openingEl.addEventListener('touchstart', startMusic, { once:true, passive:true });
-  if (openingEl) openingEl.addEventListener('click', startMusic, { once:true });
+
+  // Fallback timeout
+  setTimeout(() => {
+    if (!videoStarted) {
+      // If user hasn't clicked yet, just finish opening
+      finishOpening();
+    }
+  }, 30000); // 30s timeout if user doesn't interact
+
+  // Skip button handler
+  if (skipBtn) {
+    skipBtn.addEventListener('click', finishOpening);
+  }
 
   function introReveal(){
     gsap.fromTo('#hero .reveal',
@@ -193,8 +222,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* First user interaction unlocks audio if autoplay was blocked */
   const unlockAudio = () => {
-    if (!musicStarted) {
-      startMusic();
+    if (!musicStarted && music) {
+      music.play().then(() => {
+        musicStarted = true;
+        if (musicFab) { 
+          musicFab.classList.add('playing'); 
+          musicFab.classList.remove('needs-tap'); 
+        }
+      }).catch(() => {});
     }
     window.removeEventListener('click', unlockAudio);
     window.removeEventListener('touchstart', unlockAudio);

@@ -97,6 +97,44 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
 #opening video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;
 }
+.open-invitation-btn{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%, -50%);
+  color:rgba(255,255,255,.75);
+  font-family:var(--font-display);
+  font-size:clamp(.85rem, 1.8vw, 1.1rem);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  border:1px solid rgba(201,160,80,.4);
+  padding:.85rem 2.2rem;
+  border-radius:50px;
+  background:rgba(201,160,80,.1);
+  backdrop-filter:blur(10px);
+  z-index:10;
+  transition:all .4s var(--ease);
+  box-shadow:0 4px 20px rgba(201,160,80,.15);
+  cursor:pointer;
+  animation:invitationPulse 2.5s ease-in-out infinite;
+}
+.open-invitation-btn:hover{
+  background:rgba(201,160,80,.2);
+  border-color:rgba(201,160,80,.65);
+  color:#fff;
+  transform:translate(-50%, -50%) scale(1.04);
+  box-shadow:0 6px 28px rgba(201,160,80,.3);
+}
+.open-invitation-btn.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+@keyframes invitationPulse{
+  0%, 100%{
+    box-shadow:0 4px 20px rgba(201,160,80,.15);
+  }
+  50%{
+    box-shadow:0 4px 24px rgba(201,160,80,.28);
+  }
+}
 .skip-btn{
   position:absolute;bottom:2rem;right:2rem;
   color:#fff;
@@ -110,6 +148,12 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
   background:rgba(255,255,255,.25);
   backdrop-filter:blur(8px);
   transition:all .3s;
+  opacity:0;
+  pointer-events:none;
+}
+.skip-btn.visible{
+  opacity:1;
+  pointer-events:auto;
 }
 .skip-btn:hover{
   background:rgba(255,255,255,.4);
