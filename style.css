@@ -136,7 +136,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
   }
 }
 .skip-btn{
-  position:absolute;bottom:2rem;right:2rem;
+  position:absolute;bottom:2.0625rem;right:2rem;
   color:#fff;
   font-size:.75rem;
   letter-spacing:.15em;
