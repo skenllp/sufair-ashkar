@@ -26,6 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const musicFab = document.getElementById('music-fab');
 
   let openingDone = false;
+  let musicStarted = false;
+
+  // Attempt to autoplay music immediately from the very beginning
+  function startMusic() {
+    if (musicStarted || !music) return;
+    music.currentTime = 0;
+    music.volume = 0.55;
+    music.play().then(() => {
+      musicStarted = true;
+      if (musicFab) musicFab.classList.add('playing');
+    }).catch(() => {
+      // Autoplay blocked by browser — will retry on first user interaction
+    });
+  }
+
+  // Try immediately on page load
+  startMusic();
 
   function finishOpening(){
     if (openingDone) return;
@@ -37,10 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
         introReveal();
         if (window.ScrollTrigger) ScrollTrigger.refresh();
-        if (music) {
-          music.volume = 0.55;
-          music.play().then(()=>{ if(musicFab) musicFab.classList.add('playing'); }).catch(()=>{});
-        }
+        // Ensure music is playing after opening (in case autoplay was blocked)
+        startMusic();
       }
     });
   }
@@ -167,11 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* First user interaction unlocks audio if autoplay was blocked */
   const unlockAudio = () => {
-    if (music.paused && openingDone){
-      music.play().then(()=>musicFab.classList.add('playing')).catch(()=>{});
+    if (!musicStarted) {
+      startMusic();
     }
     window.removeEventListener('click', unlockAudio);
+    window.removeEventListener('touchstart', unlockAudio);
   };
   window.addEventListener('click', unlockAudio);
+  window.addEventListener('touchstart', unlockAudio);
 
 });
