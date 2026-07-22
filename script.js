@@ -41,7 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Try immediately on page load
+  // Start music immediately when video starts playing
+  if (video) {
+    video.addEventListener('play', () => {
+      startMusic();
+    }, { once: true });
+  }
+  
+  // Try immediately on page load as well
   startMusic();
 
   function finishOpening(){
