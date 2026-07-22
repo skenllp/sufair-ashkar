@@ -376,6 +376,11 @@ footer.site-footer{
 .fab.visible{opacity:1;pointer-events:auto;}
 .fab:hover{transform:translateY(-3px) scale(1.06);}
 #music-fab.playing{animation:spin 6s linear infinite;}
+#music-fab.needs-tap{animation:musicPulse 1.8s ease-in-out infinite;}
+@keyframes musicPulse{
+  0%,100%{box-shadow:0 8px 22px rgba(110,31,42,.15), 0 0 0 0 rgba(201,160,80,.5);}
+  50%{box-shadow:0 8px 22px rgba(110,31,42,.15), 0 0 0 10px rgba(201,160,80,0);}
+}
 @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
 
 @media (prefers-reduced-motion:reduce){

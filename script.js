@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     music.volume = 0.55;
     music.play().then(() => {
       musicStarted = true;
-      if (musicFab) musicFab.classList.add('playing');
+      if (musicFab) { musicFab.classList.add('playing'); musicFab.classList.remove('needs-tap'); }
     }).catch(() => {
       // Autoplay blocked by browser — will retry on first user interaction
     });
@@ -66,7 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
     video.addEventListener('ended', finishOpening);
   }
   setTimeout(finishOpening, 6000); // fallback ~6s
-  if (skipBtn) skipBtn.addEventListener('click', finishOpening);
+  if (skipBtn) skipBtn.addEventListener('click', (e)=>{ startMusic(); finishOpening(); });
+  // Any tap on the opening screen itself is a strong, direct user gesture — use it to unlock audio
+  if (openingEl) openingEl.addEventListener('touchstart', startMusic, { once:true, passive:true });
+  if (openingEl) openingEl.addEventListener('click', startMusic, { once:true });
 
   function introReveal(){
     gsap.fromTo('#hero .reveal',
@@ -152,13 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------------- Floating controls ---------------- */
   const fabs = document.querySelectorAll('.fab');
   window.addEventListener('scroll', () => {
-    fabs.forEach(f => f.classList.toggle('visible', window.scrollY > 200));
+    fabs.forEach(f => { if (f !== musicFab) f.classList.toggle('visible', window.scrollY > 200); });
   });
+  if (musicFab) musicFab.classList.add('visible', 'needs-tap');
 
   if (musicFab && music) {
     musicFab.addEventListener('click', () => {
       if (music.paused){
-        music.play(); musicFab.classList.add('playing'); musicFab.textContent = '♫';
+        music.play(); musicStarted = true; musicFab.classList.add('playing'); musicFab.classList.remove('needs-tap'); musicFab.textContent = '♫';
       } else {
         music.pause(); musicFab.classList.remove('playing');
       }
@@ -187,8 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.removeEventListener('click', unlockAudio);
     window.removeEventListener('touchstart', unlockAudio);
+    window.removeEventListener('touchend', unlockAudio);
+    window.removeEventListener('pointerdown', unlockAudio);
+    window.removeEventListener('keydown', unlockAudio);
   };
   window.addEventListener('click', unlockAudio);
-  window.addEventListener('touchstart', unlockAudio);
+  window.addEventListener('touchstart', unlockAudio, { passive:true });
+  window.addEventListener('touchend', unlockAudio, { passive:true });
+  window.addEventListener('pointerdown', unlockAudio);
+  window.addEventListener('keydown', unlockAudio);
 
 });
