@@ -335,7 +335,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
 .event-card h3{font-size:clamp(1.7rem,3vw,2.2rem);margin:.6rem 0 1.2rem;color:var(--burgundy);}
 .event-card .ev-date{font-family:var(--font-sub);font-style:italic;font-size:1.1rem;color:var(--gold);}
 .event-card .ev-time{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bronze);margin:.6rem 0 1rem;}
-.event-card .ev-venue{font-size:1rem;line-height:1.7;}
+.event-card .ev-venue{font-size:1rem;line-height:1.7;font-family:var(--font-arabic);letter-spacing:.02em;}
 
 /* Countdown */
 #countdown{background-image:url('assets/countdown-bg.png');}
@@ -374,8 +374,28 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
 }
 .venue-card:hover{transform:translateY(-10px);box-shadow:0 30px 60px rgba(0,0,0,.35),0 0 40px rgba(228,200,136,.22);}
 .venue-card .eyebrow{color:var(--gold);}
-.venue-card h3{font-size:1.7rem;color:var(--burgundy);margin:.6rem 0 .3rem;}
-.venue-card p{color:var(--bronze);opacity:.95;margin-bottom:1.4rem;}
+.venue-card h3,.venue-name{
+  font-size:1.7rem;
+  font-family:var(--font-arabic);
+  color:var(--burgundy);
+  margin:.6rem 0 .3rem;
+  letter-spacing:.02em;
+}
+.venue-place{color:var(--bronze);opacity:.95;margin-bottom:1rem;}
+.venue-map{
+  width:100%;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:1.2rem;
+  box-shadow:0 4px 18px rgba(0,0,0,.18);
+  border:1px solid rgba(201,160,80,.25);
+}
+.venue-map iframe{
+  width:100%;
+  height:200px;
+  border:none;
+  display:block;
+}
 .map-btn{
   display:inline-flex;align-items:center;gap:.5rem;
   padding:.75rem 1.8rem;
