@@ -431,7 +431,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:2.4rem;
+  flex-wrap:wrap;
+  gap:1.2rem;
 }
 .sibling-card{
   background:rgba(255,255,255,.42);
