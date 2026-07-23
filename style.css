@@ -428,51 +428,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
   margin:1.8rem auto 2.8rem;
 }
 .siblings-names{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:1.2rem;
-}
-.sibling-card{
-  background:rgba(255,255,255,.42);
-  backdrop-filter:blur(16px) saturate(140%);
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:50%;
-  width:140px;height:140px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 12px 40px rgba(0,0,0,.2);
-}
-.sibling-role{
   font-family:var(--font-sub);
   font-style:italic;
-  font-size:.78rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:.4rem;
-}
-.sibling-name{
-  font-family:var(--font-display);
-  font-size:1.4rem;
-  font-weight:600;
+  font-size:clamp(1rem,2vw,1.2rem);
   color:var(--burgundy);
-  letter-spacing:.03em;
-}
-.sibling-heart{
-  font-size:1.6rem;
-  color:var(--gold);
-  animation:heartbeat 1.8s ease-in-out infinite;
-}
-@keyframes heartbeat{
-  0%,100%{transform:scale(1);}
-  30%{transform:scale(1.25);}
-  60%{transform:scale(1.1);}
-}
-@media(max-width:480px){
-  .siblings-names{gap:1.2rem;}
-  .sibling-card{width:110px;height:110px;}
-  .sibling-name{font-size:1.1rem;}
+  letter-spacing:.04em;
+  text-align:center;
+  margin-top:1.6rem;
+  white-space:nowrap;
 }
 
 /* Thank you */
