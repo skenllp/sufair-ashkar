@@ -1,5 +1,5 @@
 /* ============================================================
-   Sufair & Jugunu · Ashkar & Nasiba — site script
+   Sufair & Jugunu · Askar & Nasiba — site script
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const waFab = document.getElementById('whatsapp-fab');
   if (waFab) {
     waFab.addEventListener('click', () => {
-      const text = encodeURIComponent('You are invited! Sufair & Jugunu / Ashkar & Nasiba — 21–22 August 2026. ' + window.location.href);
+      const text = encodeURIComponent('You are invited! Sufair & Jugunu / Askar & Nasiba — 21–22 August 2026. ' + window.location.href);
       window.open(`https://wa.me/?text=${text}`, '_blank');
     });
   }
