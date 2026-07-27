@@ -437,6 +437,23 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;}
   margin-top:1.6rem;
   white-space:nowrap;
 }
+.siblings-sister{
+  font-family:var(--font-sub);
+  font-style:italic;
+  font-size:clamp(1rem,2vw,1.2rem);
+  color:var(--burgundy);
+  letter-spacing:.04em;
+  text-align:center;
+  margin-top:.6rem;
+}
+.sister-label{
+  font-size:.72rem;
+  font-style:normal;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-right:.4rem;
+}
 
 /* Thank you */
 #thankyou{background-image:url('assets/thankyou-bg.png');}
